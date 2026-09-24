@@ -33,6 +33,10 @@
   text-decoration: none;
 }
 
+.link_position_last.link_active {
+  color: var(--text-primary-color);
+}
+
 .logo {
   display: flex;
   align-items: center;

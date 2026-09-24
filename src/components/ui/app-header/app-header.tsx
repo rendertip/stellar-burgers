@@ -12,10 +12,14 @@ import type { TAppHeaderUIProps } from './type';
 import styles from './app-header.module.css';
 
 export const AppHeaderUI = ({ userName }: TAppHeaderUIProps): React.JSX.Element => {
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const { pathname } = location;
   const isConstructor = pathname === '/' || pathname.startsWith('/ingredients/');
   const isFeed = pathname.startsWith('/feed');
-  const isProfile = pathname.startsWith('/profile');
+  const redirectedFromProfile = (
+    location.state as { from?: { pathname?: string } } | null
+  )?.from?.pathname?.startsWith('/profile');
+  const isProfile = pathname.startsWith('/profile') || redirectedFromProfile;
 
   return (
     <header className={styles.header}>
