@@ -20,7 +20,14 @@ export default defineConfig(({ mode }) => {
       'process.env.BURGER_API_URL': JSON.stringify(env.BURGER_API_URL ?? '')
     },
     server: {
-      open: true
+      open: true,
+      proxy: {
+        '/ingredient-images': {
+          target: 'https://code.s3.yandex.net',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/ingredient-images/, ''),
+        },
+      },
     },
   };
 });

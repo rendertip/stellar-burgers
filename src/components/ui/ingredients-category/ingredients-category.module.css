@@ -1,6 +1,7 @@
 .items {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 260px);
+  justify-content: center;
   gap: 32px 40px;
   margin: 0;
   padding: 0;

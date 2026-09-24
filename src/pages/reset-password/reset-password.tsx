@@ -1,24 +1,26 @@
-import { resetPasswordApi } from '@api';
+import { resetPassword } from '@slices/user-slice';
 import { ResetPasswordUI } from '@ui-pages';
 import { type SyntheticEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useDispatch, useSelector } from '@services/store';
+
 export const ResetPassword = (): React.JSX.Element => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
-  const [error, setError] = useState<Error | null>(null);
+  const error = useSelector((state) => state.user.error);
 
   const handleSubmit = (e: SyntheticEvent): void => {
     e.preventDefault();
 
-    setError(null);
-    void resetPasswordApi({ password, token })
+    void dispatch(resetPassword({ password, token }))
+      .unwrap()
       .then(() => {
         localStorage.removeItem('resetPassword');
         void navigate('/login');
-      })
-      .catch((err: Error) => setError(err));
+      });
   };
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export const ResetPassword = (): React.JSX.Element => {
 
   return (
     <ResetPasswordUI
-      errorText={error?.message}
+      errorText={error ?? ''}
       password={password}
       token={token}
       setPassword={setPassword}
