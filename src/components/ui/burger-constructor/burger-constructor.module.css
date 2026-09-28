@@ -1,17 +1,25 @@
 .burger_constructor {
   display: flex;
+  flex: 0 0 600px;
   flex-direction: column;
+  box-sizing: border-box;
   width: 600px;
   padding-bottom: 20px;
   color: #f2f2f3;
 }
 
 .elements {
-  min-height: 100px;
-  margin: 0;
+  width: calc(100% + 16px);
+  margin: 0 0 16px;
+  margin-right: -16px;
   padding: 0;
-  overflow-y: scroll;
+  overflow-y: auto;
   list-style-type: none;
+  scrollbar-gutter: stable;
+}
+
+.elements > :last-child {
+  margin-bottom: 0;
 }
 
 .total {

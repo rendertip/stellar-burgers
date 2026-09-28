@@ -1,5 +1,9 @@
 .container {
-  composes: container from '../common.module.css';
+  display: flex;
+  width: 1240px;
+  height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 .menu {

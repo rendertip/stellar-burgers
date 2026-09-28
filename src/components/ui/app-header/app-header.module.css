@@ -29,6 +29,12 @@
   display: flex;
   flex-basis: 35%;
   justify-content: flex-end;
+  color: var(--text-inactive-color);
+  text-decoration: none;
+}
+
+.link_position_last.link_active {
+  color: var(--text-primary-color);
 }
 
 .logo {

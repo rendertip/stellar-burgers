@@ -56,7 +56,7 @@ export const BurgerConstructorUI = ({
       )}
     </ul>
     {constructorItems.bun ? (
-      <div className={`${styles.element} mt-4 mr-4`} data-testid="constructor-bun-2">
+      <div className={`${styles.element} mr-4`} data-testid="constructor-bun-2">
         <ConstructorElement
           type="bottom"
           isLocked

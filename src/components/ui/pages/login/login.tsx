@@ -1,8 +1,4 @@
-import {
-  Input,
-  Button,
-  PasswordInput,
-} from '@krgaa/react-developer-burger-ui-components';
+import { Input, Button } from '@krgaa/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 
 import type { LoginUIProps } from './type';
@@ -38,10 +34,15 @@ export const LoginUI = ({
             />
           </div>
           <div className="pb-6">
-            <PasswordInput
+            <Input
+              type="password"
+              placeholder="Пароль"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
               name="password"
+              error={false}
+              errorText=""
+              size="default"
             />
           </div>
           <div className={`pb-6 ${styles.button}`}>

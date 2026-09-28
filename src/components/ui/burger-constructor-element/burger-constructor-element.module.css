@@ -1,4 +1,5 @@
 .element {
+  position: relative;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -11,6 +12,19 @@
 .element_fullwidth {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 536px;
+  width: 536px;
+  max-width: none;
+}
+
+.element > :first-child {
+  position: absolute;
+  right: 544px;
+  width: 24px;
+}
+
+.element > :first-child > button {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
 }
