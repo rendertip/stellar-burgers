@@ -24,32 +24,43 @@ test.describe('Конструктор бургера', () => {
     await addButtons.nth(0).click();
     await addButtons.nth(1).click();
 
-    await expect(page.getByText('Краторная булка N-200i', { exact: false })).toHaveCount(
-      3
-    );
     await expect(
-      page.getByText('Биокотлета из марсианской Магнолии', { exact: false })
-    ).toHaveCount(2);
+      page
+        .getByTestId('constructor-bun-1')
+        .getByText('Краторная булка N-200i', { exact: false })
+    ).toBeVisible();
+    await expect(
+      page
+        .getByTestId('constructor-ingredients')
+        .getByText('Биокотлета из марсианской Магнолии', { exact: false })
+    ).toBeVisible();
   });
 
   test('открывает модальное окно ингредиента и закрывает его крестиком', async ({
     page,
   }) => {
     await page.goto('/');
-    await expect(page.getByText('Краторная булка N-200i')).toBeVisible();
+    await expect(page.getByText('Биокотлета из марсианской Магнолии')).toBeVisible();
 
-    await page.getByText('Краторная булка N-200i').click();
+    await page.getByText('Биокотлета из марсианской Магнолии', { exact: true }).click();
 
+    const modal = page.locator('#modals');
     await expect(
-      page.getByRole('heading', { name: 'Детали ингредиента' })
+      modal.getByRole('heading', { name: 'Детали ингредиента' })
     ).toBeVisible();
     await expect(
-      page.getByRole('heading', { name: 'Краторная булка N-200i' })
+      modal.getByRole('heading', { name: 'Биокотлета из марсианской Магнолии' })
     ).toBeVisible();
+    await expect(modal).toContainText('Калории, ккал');
+    await expect(modal).toContainText('4242');
+    await expect(modal).toContainText('Белки, г');
+    await expect(modal).toContainText('420');
 
-    await page.getByRole('button', { name: 'Закрыть' }).click();
+    await modal.getByRole('button', { name: 'Закрыть' }).click();
 
-    await expect(page.getByRole('heading', { name: 'Детали ингредиента' })).toBeHidden();
+    await expect(
+      modal.getByRole('heading', { name: 'Детали ингредиента' })
+    ).toBeHidden();
   });
 
   test('закрывает модальное окно ингредиента по клику на оверлей', async ({ page }) => {

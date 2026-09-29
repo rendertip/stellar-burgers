@@ -21,11 +21,15 @@ const bun: TIngredient = {
   image_mobile: 'https://example.test/bun-mobile.png',
 };
 
-const filling: TConstructorIngredient = {
+const filling: TIngredient = {
   ...bun,
   _id: 'main-1',
   name: 'Биокотлета из марсианской Магнолии',
   type: 'main',
+};
+
+const constructorFilling: TConstructorIngredient = {
+  ...filling,
   id: 'filling-id',
 };
 
@@ -50,34 +54,39 @@ describe('Редьюсер конструктора бургера', () => {
     const state = constructorReducer(undefined, addIngredient(filling));
 
     expect(state.ingredients).toHaveLength(1);
-    expect(state.ingredients[0]).toMatchObject({ ...filling, id: expect.any(String) });
+    expect(state.ingredients[0]).toMatchObject(filling);
+    expect(state.ingredients[0].id).toEqual(expect.any(String));
   });
 
   it('удаляет начинку по её идентификатору в конструкторе', () => {
+    const secondFilling: TConstructorIngredient = {
+      ...constructorFilling,
+      id: 'second-filling-id',
+    };
     const state = constructorReducer(
-      { bun: null, ingredients: [filling] },
-      removeIngredient(filling.id)
+      { bun: null, ingredients: [constructorFilling, secondFilling] },
+      removeIngredient(constructorFilling.id)
     );
 
-    expect(state.ingredients).toEqual([]);
+    expect(state.ingredients).toEqual([secondFilling]);
   });
 
   it('перемещает начинку', () => {
     const secondFilling: TConstructorIngredient = {
-      ...filling,
+      ...constructorFilling,
       id: 'second-filling-id',
     };
     const state = constructorReducer(
-      { bun: null, ingredients: [filling, secondFilling] },
+      { bun: null, ingredients: [constructorFilling, secondFilling] },
       moveIngredient({ from: 0, to: 1 })
     );
 
-    expect(state.ingredients).toEqual([secondFilling, filling]);
+    expect(state.ingredients).toEqual([secondFilling, constructorFilling]);
   });
 
   it('очищает конструктор', () => {
     const state = constructorReducer(
-      { bun: { ...bun, id: 'bun-id' }, ingredients: [filling] },
+      { bun: { ...bun, id: 'bun-id' }, ingredients: [constructorFilling] },
       clearConstructor()
     );
 

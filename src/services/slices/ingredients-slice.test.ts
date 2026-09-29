@@ -27,9 +27,12 @@ describe('Редьюсер ингредиентов', () => {
 
   it('обрабатывает экшен fetchIngredients.pending', () => {
     expect(
-      ingredientsReducer(undefined, fetchIngredients.pending('request-id'))
+      ingredientsReducer(
+        { items: [ingredient], isLoading: false, error: 'Предыдущая ошибка' },
+        fetchIngredients.pending('request-id')
+      )
     ).toEqual({
-      items: [],
+      items: [ingredient],
       isLoading: true,
       error: null,
     });
@@ -38,7 +41,7 @@ describe('Редьюсер ингредиентов', () => {
   it('обрабатывает экшен fetchIngredients.fulfilled', () => {
     expect(
       ingredientsReducer(
-        undefined,
+        { items: [], isLoading: true, error: null },
         fetchIngredients.fulfilled([ingredient], 'request-id')
       )
     ).toEqual({
@@ -51,11 +54,11 @@ describe('Редьюсер ингредиентов', () => {
   it('обрабатывает экшен fetchIngredients.rejected', () => {
     expect(
       ingredientsReducer(
-        undefined,
+        { items: [ingredient], isLoading: true, error: null },
         fetchIngredients.rejected(new Error('Ошибка сети'), 'request-id')
       )
     ).toEqual({
-      items: [],
+      items: [ingredient],
       isLoading: false,
       error: 'Ошибка сети',
     });
