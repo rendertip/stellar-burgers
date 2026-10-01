@@ -16,7 +16,7 @@ const preview: Preview = {
     // Docs pages default to a light surface, which makes the app's light text
     // unreadable. Render them with the app's own palette instead.
     docs: {
-      theme: appTheme
+      theme: appTheme,
     },
 
     controls: {
